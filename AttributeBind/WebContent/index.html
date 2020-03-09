@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data:{
+				str1 : '문자열 입니다.',
+				link : 'https://kr.vuejs.org',
+				imageName :'image/logo.jpg',
+				imageWidth : '400'
+			},
+			methods:{
+				setImageWidth:function(){
+					this.imageWidth = '300'
+				},
+				resetImageWidth:function(){
+					this.imageWidth = '400'
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<h3>{{str1}}</h3>
+		<!-- 아래 두 개는 그냥 문자 link가 들어간 것! -->
+		<a href='link'>link1</a>
+		<a href='{{link}}'>link2</a>
+		<!-- 속성값을 지정 -->
+		<a v-bind:href='link'>link3</a>
+		<a :href='link'>link4</a><br/>
+		<img src="image/logo.jpg" width="400"/><br/>
+		<img :src='imageName' :width='imageWidth' v-on:mouseenter="setImageWidth" v-on:mouseleave="resetImageWidth"/><br/>
+	</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+	var homeComponent = {
+		template : '<h3>Home</h3>'
+	}
+	// 파라미터로 들어온 data1값을 출력 -> test1 / test2
+	var page1Component = {
+		template : '<h3>Page1 : {{$route.params.data1}}, {{$route.params.data2}}</h3>'
+	}
+	var page2Component = {
+		template : '<h3>Page2</h3>'
+	}
+	var router = new VueRouter({
+		routes : [
+			{
+				path : '/',
+				component : homeComponent
+			},
+			{
+				path:'/page1/:data1/:data2',
+				component : page1Component
+			},
+			{
+				path:'/page2',
+				component : page2Component
+			}
+		]
+	})
+	
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			router : router
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<router-link to="/">Home</router-link>
+		<!-- test1을 클릭하면 위에 path의 data1에 test1이 들어감 -->
+		<router-link to="/page1/test1/test11">Page1 - test1</router-link>
+		<router-link to="/page1/test2/test22">Page1 - test2</router-link>
+		<router-link to="/page2">Page2</router-link>
+		<!-- 링크를 누르면 보여줄 화면이 표시되는 부분 -->
+		<router-view></router-view>
+	</div>
+</body>
+</html>

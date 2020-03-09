@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el : '#test1',
+			data : {
+				data1 : '',
+				data2 : ''
+			},
+			methods:{
+				getData : function(){
+					//응답 결과(response)가 도착하면 함수를 호출해라.
+					axios.get('data.json').then(function(response){
+						vm1.data1 = response.data.data1
+						vm1.data2 = response.data.data2
+					})
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<h3>data1 : {{data1}}</h3>
+		<h3>data2 : {{data2}}</h3>
+		<button type="button" @click="getData">데이터 가져오기</button>
+	</div>
+</body>
+</html>

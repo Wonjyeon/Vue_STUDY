@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.box{
+		width : 200px;
+		height : 200px;
+		
+		border : 1px solid black;
+	}
+</style>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			methods:{
+				method1 : function(){
+					alert('method1')
+				},
+				method2 : function(){
+					alert('method2')
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<!-- 버튼을 클릭하면 method2를 실행하고 자신의 부모로 이벤트를 전달하여 method1도 실행 -->
+		<h3>stop 이벤트 수식어</h3>
+		<div @click="method1" class="box">
+			<button type="button" @click="method2">버튼</button>
+			<!-- 자신의 이벤트만 처리하고 부모 태그로 이벤트를 전달하지 X. -->
+			<button type="button" @click.stop="method2">버튼</button>
+		</div>
+		<hr>
+		
+		<h3>prevent 이벤트 수식어</h3>
+		<!-- .prevent : 이벤트를 무시하고 함수만 호출 -->
+		<a @click.prevent="method1" href="http://www.softcampus.co.kr">softcampus</a>
+		<!-- method1을 실행한 후 페이지로 이동 -->
+		<a @click="method1" href="https://www.naver.com">naver</a>
+		<hr>
+		
+		<h3>capture 이벤트 수식어</h3>
+		<!-- 해당 태그를 포함한 하위 태그들 중 클릭 이벤트가 발생하면 자기 자신을 먼저 처리하고 클릭한 태그를 나중에 처리하겠다! -->
+		<!-- button이 클릭되어도 div 먼저 함수 호출한 후에 button 이벤트 처리. -->
+		<div @click.capture="method1" class="box">
+			<button type="button" @click="method2">버튼</button>
+		</div>
+		<hr>
+		
+		<h3>self 이벤트 수식어</h3>
+		<!-- 이벤트가 전파되어도 자신을 클릭한게 아니라면 그 이벤트를 무시! -->
+		<div @click.self="method1" class="box">
+			<button type="button" @click="method2">버튼</button>
+			<button type="button" @click="method2">버튼</button>
+		</div>
+		<hr>
+		
+		<h3>once 이벤트 수식어</h3>
+		<!-- 브라우저가 뜬 후 딱 한 번만 실행됨. -->
+		<div @click.once="method1" class="box">
+		
+		</div>
+	</div>
+</body>
+</html>

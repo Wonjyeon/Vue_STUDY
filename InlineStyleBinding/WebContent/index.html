@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data : {
+				bgcolorValue:'red',
+				colorValue:'yellow',
+				styleValue:{
+					backgroundColor : 'red',
+					color:'yellow'
+				}
+			},
+			methods:{
+				setInlineStyle:function(){
+					this.bgcolorValue = 'yellow'
+					this.colorValue = 'red'
+				},
+				setStyleValue:function(){
+					this.styleValue={
+							backgroundColor:'yellow',
+							color:'red'
+					}
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<h3 style="background-color:red; color:yellow">문자열</h3>
+		<h3 v-bind:style='{backgroundColor : bgcolorValue, color : colorValue}'>문자열</h3>
+	
+		<button type="button" v-on:click="setInlineStyle">inline style 변경</button>
+		<h3 v-bind:style='styleValue'>문자열</h3>
+		<button type="button" v-on:click="setStyleValue">객체 변경</button>
+	</div>
+</body>
+</html>

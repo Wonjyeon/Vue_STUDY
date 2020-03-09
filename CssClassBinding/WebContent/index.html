@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<style>
+	.css1{
+		background-color:yellow;
+	}
+	.css2{
+		color:red;
+	}
+	.css3{
+		background-color:red;
+	}
+	.css4{
+		color:yellow;
+	}
+
+</style>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data:{
+				css1Name : 'css1',
+				css2Name : 'css2',
+				isCss1 : false,
+				isCss2 : false
+			},
+			methods:{
+				setCss1 : function(){
+					this.css1Name = 'css3'
+					this.css2Name = 'css4'
+				},
+				setCss2 : function(){
+					this.isCss1 = true
+					this.isCss2 = true
+				},
+				removeCss2 : function(){
+					this.isCss1 = false
+					this.isCss2 = false
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<h3 class='css1 css2'>문자열</h3>
+		<h3 v-bind:class='css1Name'>문자열</h3>
+		<h3 v-bind:class='[css1Name,css2Name]'>문자열</h3>
+		<button type="button" v-on:click="setCss1">css1 변경</button>
+	
+		<!-- isCss1에 true가 들어가있으면 적용. false면 적용X. -->
+		<h3 v-bind:class='{css1:isCss1, css2:isCss2}'>문자열</h3>
+		<button type="button" v-on:click="setCss2">CSS true 설정</button>
+		<button type="button" v-on:click="removeCss2">CSS false 설정</button>
+	
+		<h3 v-bind:class='[isCss1 ? css1Name : "", isCss2 ? css2Name : ""]'>문자열</h3>
+		<h3 v-bind:class='[isCss1 ? css1Name : css2Name]'>문자열</h3>
+	</div>
+</body>
+</html>

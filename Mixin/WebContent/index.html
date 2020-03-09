@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	var myMixin = {
+		// mixin이 만들어질 때 호출되는 함수
+		created : function(){
+			alert('Mixin Created')
+		},
+		methods : {
+			test1 : function(){
+				alert('test1')
+			},
+			test2 : function(){
+				alert('test2')
+			}
+		}
+	}
+	/*
+	var Component = Vue.extend({
+		mixins : [myMixin]
+	})
+	var component = new Component();
+	*/
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			mixins : [myMixin]
+		})
+		//vm1.test1()
+		//vm1.test2()
+		var vm2 = new Vue({
+			el:'#test2',
+			mixins : [myMixin]
+		})
+	}
+	
+	
+</script>
+</head>
+<body>
+	<div id="test1">
+		<button type="button" @click="test1">test1</button>
+		<button type="button" @click="test2">test2</button>
+	</div>
+	<div id="test2">
+		<button type="button" @click="test1">test1</button>
+		<button type="button" @click="test2">test2</button>
+	</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<style>
+	/* 태그가 사라지는 동작이 발생했을 때 공통 부분*/
+	.fade-leave-active{
+		transition : all .5s;
+	}
+	/* 태그가 사라지기 직전 */
+	.fade-leave{
+		opacity : 1;
+	}
+	/* 태그가 사라지고 난 후 */
+	.fade-leave-to{
+		opacity : 0;
+	}
+	/* 태그가 나타나는 동작이 발생했을 때 공통 부분 */
+	.fade-enter-active{
+		transition : all .5s;
+	}
+	/* 태그가 나타나기 직전 */
+	.fade-enter{
+		opacity : 0;
+	}
+	/* 태그가 나타난 후 */
+	.fade-enter-to{
+		opacity : 1;
+	}
+	
+	.bounce-enter-active{
+		animation : bounce-in .5s;
+	}
+	.bounce-leave-active{
+		animation : bounce-in .5s reverse;
+	}
+	@keyframes bounce-in{
+		0%{
+			transform : scale(0);
+		}
+		50%{
+			transform : scale(1.5);
+		}
+		100%{
+			transform : scale(1);
+		}
+	}
+</style>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data : {
+				show1 : true,
+				show2 : true,
+				show3 : true,
+				status : ''
+			},
+			methods : {
+				setShow1 : function(){
+					if(this.show1 == true){
+						this.show1 = false
+					}
+					else{
+						this.show1 = true
+					}
+				},
+				setShow2 : function(){
+					if(this.show2 == true){
+						this.show2 = false
+					}
+					else{
+						this.show2 = true
+					}
+				},
+				setShow3 : function(){
+					if(this.show3 == true){
+						this.show3 = false
+					}
+					else{
+						this.show3 = true;
+					}
+				},
+				beforeEnter : function(){
+					this.status = '나타나기 전'
+				},
+				enter : function(){
+					this.status = '나타나는 중'
+				},
+				afterEnter : function(){
+					this.status = '나타난 후'
+				},
+				enterCancelled : function(){
+					this.status = '나타나는 과정 취소'
+				},
+				beforeLeave : function(){
+					this.status = '사라지기 전'
+				},
+				leave : function(){
+					this.status = '사라지는 중'
+				},
+				afterLeave : function(){
+					this.status = '사라진 후'
+				},
+				leaveCancelled : function(){
+					this.status = '사라지는 과정 취소'
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<transition name="fade">
+			<h3 v-if="show1">문자열</h3>
+		</transition>
+		<button type="button" @click="setShow1">show1 세팅</button>
+		<hr>
+		
+		<transition name="bounce">
+			<h1 v-if="show2">문자열문자열문자열문자열문자열문자열문자열문자열문자열문자열</h1>
+		</transition>
+		<button type="button" @click="setShow2">show2 세팅</button>
+		<hr>
+		
+		<transition name="fade"
+			@before-enter='beforeEnter'
+			@enter = 'enter'
+			@after-enter = 'afterEnter'
+			@enter-cancelled = 'enterCancelled'
+			@before-leave = 'beforeLeave'
+			@leave = 'leave'
+			@after-leave = 'afterLeave'
+			@leave-cancelled = 'leaveCancelled'>
+			<h3 v-if="show3">문자열</h3>
+		</transition>
+		<button type="button" @click="setShow3">show3 세팅</button>
+		<h3>status : {{status}}</h3>
+		
+	</div>
+</body>
+</html>

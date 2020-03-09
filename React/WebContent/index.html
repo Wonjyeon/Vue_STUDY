@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data:{
+				value1:100,
+				obj1 : {},
+				counter : 0,
+				newValue : 0,
+				oldValue : 0
+			},
+			methods:{
+				setValue1 : function(){
+					this.value1 = 200
+				},
+				setValue2 : function(){
+					this.obj1.value2 = 2000
+				},
+				addCounter : function(){
+					this.counter++
+				}
+			}
+		})
+		/*
+			 Vue객체 생성 후 외부에서 추가된 변수
+			 이 변수는 웹브라우저가 감시하지 X. -> 처음엔 랜더링되지 않음.
+			 다음 랜더링시 화면에 반영되므로 setValue1 함수 호출 후에 랜더링됨.
+		*/
+		//vm1.value2 = 1000
+		Vue.set(vm1.obj1,'value2',1000)
+		
+		/*
+			counter변수를 감시하고 있다가 변경되면 함수 호출.
+			new_value에는 counter에 새롭게 할당된 값이 들어옴.
+			old_value에는 새롭게 세팅되기 전 값.
+		*/
+		vm1.$watch('counter',function(new_value, old_value){
+			this.newValue = new_value
+			this.oldValue = old_value
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<h3>value1 : {{value1}}</h3>
+		<button type="button" @click="setValue1">value1</button>
+		<hr>
+		<!-- 
+			value2는 Vue객체 외부에서 생성한 변수
+			-> setValue2 함수를 호출해도 즉각적으로 값이 변하지 않음.
+			-> Vue.set으로 등록해주어야 함.
+		 -->
+		<h3>value2 : {{obj1.value2}}</h3>
+		<button type="button" @click="setValue2">value2</button>
+		<hr>
+		<h3>counter : {{counter}}</h3>
+		<h3>newValue : {{newValue}}</h3>
+		<h3>oldValue : {{oldValue}}</h3>
+		<button type="button" @click="addCounter">add counter</button>
+	
+	</div>
+</body>
+</html>

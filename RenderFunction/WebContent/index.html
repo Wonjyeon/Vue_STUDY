@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	Vue.component('com1',{
+		template : '<h1>Hello World</h1>'
+	})
+	
+	Vue.component('com2',{
+		template : '<h1><slot></slot></h1>'
+	})
+	// 함수 내부의 코드를 동작시켜서 얘가 반환하는 태그를 렌더링함
+	// createElement : 태그 객체를 만들 수 있는 함수.
+	Vue.component('com3',{
+		render : function(createElement){
+			//var msg = 'Hello World'
+			var msg = this.$slots.default[0].text;
+			
+			var tagName = this.tagname;
+			var idValue = this.id;
+			var colorValue = this.color;
+			var bgcolorValue = this.bgcolor;
+			
+			var h1_tag = createElement(tagName,{
+				// 태그 내의 속성을 정의함.
+				attrs : {
+					id:idValue
+				},
+				style:{
+					color:colorValue,
+					backgroundColor:bgcolorValue
+				}
+			},msg)
+			
+			return h1_tag
+		},
+		props :{
+			tagname : {
+				attributes : String,
+				// 반드시 있어야 하는 속성! -> tagname이 없으면 오류가 발생.
+				// 이걸 안하면 tagname이 없어도 오류가 나진 않음.
+				required : true
+			},
+			id : {
+				attributes : String,
+				required : true
+			},
+			color : {
+				attributes : String
+			},
+			bgcolor : {
+				attributes : String
+			}
+		}
+	})
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1'
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<com1>Apple</com1>
+		<com1>Google</com1>
+		<com1>Microsoft</com1>
+		<hr/>
+		<com2>Apple</com2>
+		<com2>Google</com2>
+		<com2>Microsoft</com2>
+		<hr/>
+		<!-- h1이라는 문자열을 넘기고 싶으면 ""로 묶어서 그 안에 문자열 넣어야 함. -->
+		<!-- tagName이라고 해도 위에서 받아올땐 tagname이 됨. 소문자로! -->
+		<com3 :tagname="'h1'" :id="'a1'" :color="'red'" :bgcolor="'blue'">Apple</com3>
+		<com3 :tagname="'h2'" :id="'a2'" :color="'white'" :bgcolor="'black'">Google</com3>
+		<com3 :tagname="'h3'" :id="'a3'">Microsoft</com3>
+	
+	
+	</div>
+</body>
+</html>

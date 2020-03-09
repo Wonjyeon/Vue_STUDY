@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data:{
+				data1 : 'aaaa',
+				data2 : 'bbbb'
+			},
+			computed:{
+				data3 : {
+					// 값을 반환해줌
+					get : function(){
+						return this.data1 +' , '+ this.data2
+					},
+					set : function(newVal){
+						var list = newVal.split(',')
+						if(list.length>=2){
+							this.data1 = list[0]
+							this.data2 = list[1]
+						}
+					}
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<input type="text" v-model="data1"/><br/>
+		<input type="text" v-model="data2"/><br/>
+		<input type="text" v-model="data3"/><br/>
+	</div>
+</body>
+</html>

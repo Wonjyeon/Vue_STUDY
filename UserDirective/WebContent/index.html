@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	// 지시자를 등록하는 부분 -> focus란 이름으로 지시자를 등록함!
+	Vue.directive('focus',{
+		// el에는 v-focus를 적용한 html 태그 정보가 들어옴.
+		inserted : function(el){
+			el.focus()
+		}
+	})
+
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data : {
+				str : '',
+				data1 : 'data1 value'
+			},
+			methods:{
+				setStr : function(){
+					this.str = '변경된 문자열'
+				}
+			},
+			directives : {
+				focus2 : {
+					inserted : function(el){
+						el.focus();
+					}
+				},
+				test : {
+					// 지시자가 태그에 세팅되었을 때 딱 한 번 호출됨.
+					// test가 h3에 세팅
+					bind : function(el){
+						console.log('bind')
+					},
+					/*
+					지시자가 세팅되어있는 HTML 태그가 객체로 만들어지고
+					사용 가능한 형태가 되었을 때 호출됨.
+					*/
+					inserted : function(el){
+						console.log('inserted')
+					},
+					// 지시자가 세팅되어있는 HTML 태그 내부가 변경되기 전
+					update : function(el){
+						console.log('update')
+					},
+					// 지시자가 세팅되어있는 HTML 태그 내부가 변경된 후
+					componentUpdated : function(el){
+						console.log('componentUpdated')
+					},
+					// 지시자가 세팅되어있는 HTML 태그에서 지시자가 제거될 때
+					unbind : function(el){
+						console.log('unbind')
+					}
+				},
+				test2 : {
+					bind : function(el, binding, vnode){
+						console.log('el : '+el)
+						// 바인딩된 지시자의 이름
+						console.log('binding.name : '+binding.name)
+						console.log('binding.value : '+binding.value)
+						console.log('binding.arg : '+binding.arg)
+						// .a1이라고 넘어오는 값이 있는가 -> 있으면 true, 없으면 undefined
+						console.log('binding.modifiers.a1 : '+binding.modifiers.a1)
+						console.log('binding.modifiers.a2 : '+binding.modifiers.a2)
+						console.log('binding.modifiers.a3 : '+binding.modifiers.a3)
+						console.log('vnode.tag : '+vnode.tag)
+					}
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<input type="text" v-focus><br>
+		<input type="text" v-focus2><br>
+		<h3 v-test>{{str}}</h3>
+		<button type="button" @click="setStr">str 변경</button>
+		
+		<!-- 
+			binding value를 data1로 넘겨주는데, 이때 문자열은 문자열 값을 넘기는게 아니라
+			Vue의 data1이라는 변수의 값을 넘겨주는 것!
+			이때, v-test2 = "1 + 1"이라고 하면 2가 넘어감.
+		 -->
+		<h3 v-test2:arg1.a1.a2="data1">{{str}}</h3>
+	
+	</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data:{
+				input1 : '초기값',
+				input2 : '',
+				input3 : false,
+				input4 : false,
+				input5 : false,
+				input6 : false,
+				input7 : false,
+				input8 : false,
+				input9 : 'r2',
+				input10 : 'item3',
+				input11 : '',
+				input12 : '',
+				input13 : ''
+			},
+			methods : {
+				checkType : function(){
+					alert(typeof(this.input12))
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<h3>Input type text</h3>
+		<input type="text" v-model="input1"/><br/>
+		<h3>input1 : {{input1}}</h3>
+		<hr/>
+		
+		<h3>Text Area</h3>
+		<textarea v-model="input2"></textarea><br/>
+		<!-- enter치면 밑으로 입력 -->
+		<pre>input2 : {{input2}}</pre>
+		<hr/>
+		
+		<h3>CheckBox</h3>
+		<input type="checkbox" v-model="input3"/>체크박스1<br/>
+		<input type="checkbox" v-model="input4"/>체크박스2<br/>
+		<input type="checkbox" v-model="input5"/>체크박스3<br/>
+	
+		<h3>input3 : {{input3}}</h3>
+		<h3>input4 : {{input4}}</h3>
+		<h3>input5 : {{input5}}</h3>
+	
+		<h3>CheckBox Value</h3>
+		<!-- value 속성이 들어가도 value에는 true/false -->
+		<input type="checkbox" v-model="input6" value="100"/>체크박스 100<br/>
+		<input type="checkbox" v-model="input7" value="200"/>체크박스 200<br/>
+		<input type="checkbox" v-model="input8" value="300"/>체크박스 300<br/>
+	
+		<h3>input6 : {{input6}}</h3>
+		<h3>input7 : {{input7}}</h3>
+		<h3>input8 : {{input8}}</h3>
+		<hr>
+		
+		<h3>Radio</h3>
+		<!-- value 속성을 지정해야 함 -->
+		<!-- value값이 v-model 값으로 넘어감. -->
+		<input type="radio" v-model="input9" value="r1">라디오1<br/>
+		<input type="radio" v-model="input9" value="r2">라디오2<br/>
+		<input type="radio" v-model="input9" value="r3">라디오3<br/>
+		<h3>input9 : {{input9}}</h3>
+		<hr>
+		
+		<!-- value가 없으면 v-model에 option사이의 문자열이 들어감. -->
+		<h3>select</h3>
+		<select v-model="input10">
+			<option value="item1">항목1</option>
+			<option value="item2">항목2</option>
+			<option value="item3">항목3</option>
+			<option value="item4">항목4</option>
+			<option value="item5">항목5</option>
+		</select>
+		<h3>input10 : {{input10}}</h3>
+		<hr/>
+		
+		<h3>lazy 수식어 적용</h3>
+		<input type="text" v-model.lazy="input11"><br/>
+		<h3>input11 : {{input11}}</h3>
+		<hr>
+		
+		<h3>number 수식어 적용</h3>
+		<input type="text" v-model.number="input12"><br/>
+		<h3>input12 : {{input12}}</h3>
+		<button type="button" v-on:click="checkType">타입 체크</button>
+		<hr/>
+		
+		<!-- 앞뒤의 공백만 제거 -->
+		<h4>trim 수식어 적용</h4>
+		<input type="text" v-model.trim = "input13"><br/>
+		<pre>[{{input13}}]</pre>
+		
+	</div>
+	
+</body>
+</html>

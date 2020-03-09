@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://unpkg.com/vue"></script>
+<style>
+	.in{
+		background-color:red;
+		color : yellow;
+	}
+	.out{
+		background-color:yellow;
+		color : red;
+	}
+</style>
+
+<script>
+	window.onload = function(){
+		var vm1 = new Vue({
+			el:'#test1',
+			data:{
+				data1 : 0,
+				data2 : 0,
+				result1 : 0,
+				inOutCss : 'out'
+				
+			},
+			methods:{
+				btnEvent : function(){
+					alert('버튼을 눌렀습니다.')
+				},
+				imageEvent : function(){
+					alert('image click event')
+				},
+				addNumber : function(){
+					this.result1 = this.data1 + this.data2
+				},
+				inEvent : function(){
+					this.inOutCss = 'in'
+				},
+				outEvent : function(){
+					this.inOutCss = 'out'
+				}
+			}
+		})
+	}
+</script>
+</head>
+<body>
+	<div id="test1">
+		<button type="button" v-on:click="btnEvent">버튼</button>
+		<button type="button" @click="btnEvent">버튼</button>
+		<br/>
+		
+		<img src="image/logo.jpg" width="300" @click="imageEvent"><br/>
+		<hr/>
+		
+		data1 : <input type="number" v-model.number="data1"><br/>
+		data2 : <input type="number" v-model.number="data2"><br/>
+		<button type="button" @click="addNumber">숫자 더하기</button>
+		<h3>결과 : {{result1}}</h3>
+		
+		<h3 v-bind:class="inOutCss" @mouseenter = "inEvent" @mouseleave="outEvent">문자열</h3>
+	</div> 
+</body>
+</html>
